@@ -3,7 +3,9 @@ package main
 import (
 	"fmt"
 
+	"github.com/anfelo/comments-api-v2/internal/comment"
 	"github.com/anfelo/comments-api-v2/internal/db"
+	transportHttp "github.com/anfelo/comments-api-v2/internal/transport/http"
 )
 
 // Run - Responsible for the instantiation
@@ -18,6 +20,12 @@ func Run() error {
 	}
 	if err := db.MigrateDB(); err != nil {
 		fmt.Println("failed to migrate database")
+		return err
+	}
+
+	cmtService := comment.NewService(db)
+	httpHandler := transportHttp.NewHandler(cmtService)
+	if err := httpHandler.Serve(); err != nil {
 		return err
 	}
 
