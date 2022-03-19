@@ -24,9 +24,9 @@ type Comment struct {
 // interact with the store or repository layer
 type Store interface {
 	GetComment(context.Context, string) (Comment, error)
-	UpdateComment(ctx context.Context, cmt Comment) error
-	DeleteComment(ctx context.Context, id string) error
-	CreateComment(ctx context.Context, cmt Comment) (Comment, error)
+	PostComment(context.Context, Comment) (Comment, error)
+	UpdateComment(context.Context, string, Comment) (Comment, error)
+	DeleteComment(context.Context, string) error
 }
 
 // Service - is the struct on which all our logic
@@ -52,17 +52,30 @@ func (s *Service) GetComment(ctx context.Context, id string) (Comment, error) {
 	return cmt, nil
 }
 
+// PostComment - creates a new comment
+func (s *Service) PostComment(ctx context.Context, cmt Comment) (Comment, error) {
+	insertedCmt, err := s.Store.PostComment(ctx, cmt)
+	if err != nil {
+		return Comment{}, err
+	}
+	return insertedCmt, nil
+}
+
 // UpdateComment - updates a comment
-func (s *Service) UpdateComment(ctx context.Context, cmt Comment) error {
-	return ErrNotImplemented
+func (s *Service) UpdateComment(
+	ctx context.Context,
+	ID string,
+	updatedCmt Comment,
+) (Comment, error) {
+	cmt, err := s.Store.UpdateComment(ctx, ID, updatedCmt)
+	if err != nil {
+		fmt.Println("error updating comment")
+		return Comment{}, err
+	}
+	return cmt, nil
 }
 
 // DeleteComment - deletes a comment by its id
 func (s *Service) DeleteComment(ctx context.Context, id string) error {
-	return ErrNotImplemented
-}
-
-// CreateComment - creates a new comment
-func (s *Service) CreateComment(ctx context.Context, cmt Comment) (Comment, error) {
-	return Comment{}, ErrNotImplemented
+	return s.Store.DeleteComment(ctx, id)
 }

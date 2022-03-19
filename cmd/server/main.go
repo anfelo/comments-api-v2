@@ -20,6 +20,7 @@ func Run() error {
 		fmt.Println("failed to migrate database")
 		return err
 	}
+
 	return nil
 }
 
