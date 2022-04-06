@@ -3,6 +3,7 @@ module github.com/anfelo/comments-api-v2
 go 1.17
 
 require (
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/golang-migrate/migrate/v4 v4.15.1 // indirect
 	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hashicorp/errwrap v1.0.0 // indirect
@@ -10,5 +11,7 @@ require (
 	github.com/jmoiron/sqlx v1.3.4 // indirect
 	github.com/lib/pq v1.10.4 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
+	github.com/sirupsen/logrus v1.8.1 // indirect
 	go.uber.org/atomic v1.6.0 // indirect
+	golang.org/x/sys v0.0.0-20211013075003-97ac67df715c // indirect
 )
