@@ -33,7 +33,7 @@ func (d *Database) GetComment(
 	row := d.Client.QueryRowContext(
 		ctx,
 		`SELECT id, slug, body, author
-		FORM comments
+		FROM comments
 		WHERE id = $1`,
 		uuid,
 	)
@@ -61,7 +61,7 @@ func (d *Database) PostComment(
 		`INSERT INTO comments
 		(id, slug, author, body)
 		VALUES
-		(:id, :slug, : author, :body)`,
+		(:id, :slug, :author, :body)`,
 		postRow,
 	)
 	if err != nil {
@@ -102,7 +102,7 @@ func (d *Database) UpdateComment(
 		ctx,
 		`UPDATE comments SET
 		slug = :slug,
-		author = :author
+		author = :author,
 		body = :body
 		WHERE id = :id`,
 		cmtRow,
